@@ -16,12 +16,6 @@ pipeline {
             }
         }
 
-        stage('Check Files') {
-            steps {
-                bat 'dir'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Build completed successfully.'
