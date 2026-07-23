@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend-pod
+
+  labels:
+    app: frontend
+    env: test
+    tier: frontend
+
+spec:
+  containers:
+  - name: fronetend-cont
+    image: nginx:latest

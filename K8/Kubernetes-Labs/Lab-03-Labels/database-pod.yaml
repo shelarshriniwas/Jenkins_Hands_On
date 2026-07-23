@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database-pod
+
+  labels:
+    app: database
+    env: test
+    tier: database
+
+spec:
+  containers:
+  - name: database-cont
+    image: nginx:latest

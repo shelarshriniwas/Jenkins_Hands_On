@@ -1,0 +1,68 @@
+services:
+
+  flask-app:
+    build: ./app
+    container_name: flask-app
+
+    ports:
+      - "5000:5000"
+
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: school_management
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root@123
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - app-network
+
+  mysql:
+
+    image: mysql:8.4
+
+    container_name: mysql
+
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: school_management
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root@123
+      MYSQL_ROOT_PASSWORD: root@123
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-h","localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - app-network
+
+  redis:
+
+    image: redis:7
+
+    container_name: redis
+
+    ports:
+      - "6379:6379"
+
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mysql-data:
